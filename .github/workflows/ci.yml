@@ -1,0 +1,67 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    name: Compilación y Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+      fail-fast: false
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Caché de paquetes NuGet
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      # Solo restaura el TFM net10.0 (sin MAUI) para evitar requerir workloads en ambas plataformas
+      - name: Restaurar proyecto principal (net10.0)
+        run: dotnet restore Parcial1LucaDepetris.csproj /p:TargetFrameworks=net10.0
+
+      - name: Restaurar proyecto de tests
+        run: dotnet restore Parcial1LucaDepetris.Tests/Parcial1LucaDepetris.Tests.csproj
+
+      - name: Compilar proyecto principal
+        run: dotnet build Parcial1LucaDepetris.csproj -f net10.0 --no-restore
+
+      - name: Ejecutar tests
+        run: dotnet test Parcial1LucaDepetris.Tests/Parcial1LucaDepetris.Tests.csproj --no-restore --verbosity normal
+
+      # Instala el workload MAUI solo en Windows para generar el artefacto de la app
+      - name: Instalar workload MAUI
+        if: matrix.os == 'windows-latest'
+        run: dotnet workload install maui
+
+      - name: Restaurar proyecto completo (Windows)
+        if: matrix.os == 'windows-latest'
+        run: dotnet restore Parcial1LucaDepetris.csproj
+
+      - name: Publicar app Windows
+        if: matrix.os == 'windows-latest'
+        run: dotnet publish Parcial1LucaDepetris.csproj -f net10.0-windows10.0.19041.0 -c Release --no-restore -o ./publish
+
+      - name: Subir artefacto
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-windows
+          path: ./publish
+          retention-days: 7
