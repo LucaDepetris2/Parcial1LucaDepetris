@@ -9,6 +9,7 @@ namespace Parcial1LucaDepetris.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private readonly IPostService _postService;
+        private readonly INavigationService _navigationService;
 
         [ObservableProperty]
         private ObservableCollection<Post> _posts = [];
@@ -22,9 +23,10 @@ namespace Parcial1LucaDepetris.ViewModels
 
         public bool IsNotLoading => !IsLoading;
 
-        public MainViewModel(IPostService postService)
+        public MainViewModel(IPostService postService, INavigationService navigationService)
         {
             _postService = postService;
+            _navigationService = navigationService;
         }
 
         [RelayCommand]
@@ -76,7 +78,7 @@ namespace Parcial1LucaDepetris.ViewModels
                 { "Post", post }
             };
 
-            await Shell.Current.GoToAsync("DetailPage", parameters);
+            await _navigationService.NavigateToAsync("DetailPage", parameters);
         }
     }
 }

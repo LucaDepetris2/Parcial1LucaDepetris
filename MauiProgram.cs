@@ -22,6 +22,7 @@ namespace Parcial1LucaDepetris
             // HttpClient y Servicio REST
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<IPostService, PostService>();
+            builder.Services.AddSingleton<INavigationService, MauiNavigationService>();
 
             // Repositorio SQLite local
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "favorites.db3");

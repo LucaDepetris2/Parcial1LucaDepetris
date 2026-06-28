@@ -5,7 +5,9 @@ using Parcial1LucaDepetris.Services;
 
 namespace Parcial1LucaDepetris.ViewModels
 {
+#if MAUI_BUILD
     [QueryProperty(nameof(Post), "Post")]
+#endif
     public partial class DetailViewModel : ObservableObject
     {
         private readonly IFavoriteRepository _repository;
