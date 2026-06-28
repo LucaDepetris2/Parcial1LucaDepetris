@@ -29,15 +29,20 @@ namespace Parcial1LucaDepetris
             builder.Services.AddSingleton(_ => new SQLiteAsyncConnection(dbPath));
             builder.Services.AddSingleton<IFavoriteRepository, FavoriteRepository>();
 
+            // Sensores
+            builder.Services.AddSingleton<ISensorService, SensorService>();
+
             // ViewModels
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<DetailViewModel>();
             builder.Services.AddTransient<FavoritesViewModel>();
+            builder.Services.AddTransient<SensorViewModel>();
 
             // Views
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<DetailPage>();
             builder.Services.AddTransient<FavoritesPage>();
+            builder.Services.AddTransient<SensorPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

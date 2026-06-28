@@ -28,5 +28,9 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>La app usa tu ubicación para mostrar datos de GPS en la pantalla de sensores.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>La app solicita acceso a la cámara como demostración de permisos en runtime.</string>
 </dict>
 </plist>

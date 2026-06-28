@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Parcial1LucaDepetris.ViewModels"
+             x:DataType="vm:SensorViewModel"
+             x:Class="Parcial1LucaDepetris.Views.SensorPage"
+             Title="Sensores">
+
+    <ScrollView Padding="16">
+        <VerticalStackLayout Spacing="24">
+
+            <!-- GPS -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="GPS / Ubicación"
+                       FontAttributes="Bold"
+                       FontSize="16" />
+                <Label Text="{Binding LocationInfo}"
+                       TextColor="Gray"
+                       FontSize="13" />
+                <Button Text="Obtener ubicación"
+                        Command="{Binding GetLocationCommand}"
+                        HorizontalOptions="Fill" />
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <!-- Acelerómetro -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Acelerómetro"
+                       FontAttributes="Bold"
+                       FontSize="16" />
+                <Label Text="{Binding AccelerometerData}"
+                       TextColor="Gray"
+                       FontSize="13" />
+                <Button Text="{Binding AccelButtonText}"
+                        Command="{Binding ToggleAccelerometerCommand}"
+                        HorizontalOptions="Fill" />
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <!-- Vibración -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Vibración"
+                       FontAttributes="Bold"
+                       FontSize="16" />
+                <Button Text="Vibrar 500 ms"
+                        Command="{Binding VibrateCommand}"
+                        HorizontalOptions="Fill" />
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="1" Color="LightGray" />
+
+            <!-- Cámara -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Permiso de Cámara"
+                       FontAttributes="Bold"
+                       FontSize="16" />
+                <Label Text="{Binding CameraPermissionStatus}"
+                       TextColor="Gray"
+                       FontSize="13" />
+                <Button Text="Solicitar permiso de cámara"
+                        Command="{Binding RequestCameraPermissionCommand}"
+                        HorizontalOptions="Fill" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -59,6 +59,8 @@
 		<Compile Remove="Views\DetailPage.xaml.cs" />
 		<Compile Remove="Views\FavoritesPage.xaml.cs" />
 		<Compile Remove="Services\MauiNavigationService.cs" />
+		<Compile Remove="Services\SensorService.cs" />
+		<Compile Remove="Views\SensorPage.xaml.cs" />
 		<Compile Remove="Platforms\**\*.cs" />
 	</ItemGroup>
 

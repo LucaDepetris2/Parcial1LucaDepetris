@@ -17,6 +17,11 @@
             Title="Favoritos"
             ContentTemplate="{DataTemplate views:FavoritesPage}"
             Route="FavoritesPage" />
+
+        <ShellContent
+            Title="Sensores"
+            ContentTemplate="{DataTemplate views:SensorPage}"
+            Route="SensorPage" />
     </TabBar>
 
 </Shell>
