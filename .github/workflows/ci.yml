@@ -37,7 +37,7 @@ jobs:
         run: dotnet restore Parcial1LucaDepetris.csproj /p:TargetFrameworks=net10.0
 
       - name: Restaurar proyecto de tests
-        run: dotnet restore Parcial1LucaDepetris.Tests/Parcial1LucaDepetris.Tests.csproj
+        run: dotnet restore Parcial1LucaDepetris.Tests/Parcial1LucaDepetris.Tests.csproj /p:TargetFrameworks=net10.0
 
       - name: Compilar proyecto principal
         run: dotnet build Parcial1LucaDepetris.csproj -f net10.0 --no-restore
