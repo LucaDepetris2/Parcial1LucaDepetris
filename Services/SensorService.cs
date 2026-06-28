@@ -1,4 +1,4 @@
-namespace Parcial1LucaDepetris.Services
+﻿namespace Parcial1LucaDepetris.Services
 {
     public class SensorService : ISensorService
     {
@@ -23,11 +23,19 @@ namespace Parcial1LucaDepetris.Services
             }
         }
 
-        public void StartAccelerometer(Action<(double X, double Y, double Z)> onReading)
+        public bool StartAccelerometer(Action<(double X, double Y, double Z)> onReading)
         {
-            _onReading = onReading;
-            Accelerometer.Default.ReadingChanged += OnAccelerometerReadingChanged;
-            Accelerometer.Default.Start(SensorSpeed.UI);
+            try
+            {
+                _onReading = onReading;
+                Accelerometer.Default.ReadingChanged += OnAccelerometerReadingChanged;
+                Accelerometer.Default.Start(SensorSpeed.UI);
+                return true;
+            }
+            catch (FeatureNotSupportedException)
+            {
+                return false;
+            }
         }
 
         public void StopAccelerometer()
@@ -43,9 +51,17 @@ namespace Parcial1LucaDepetris.Services
             _onReading?.Invoke((r.Acceleration.X, r.Acceleration.Y, r.Acceleration.Z));
         }
 
-        public void Vibrate(int milliseconds = 500)
+        public bool Vibrate(int milliseconds = 500)
         {
-            Vibration.Default.Vibrate(TimeSpan.FromMilliseconds(milliseconds));
+            try
+            {
+                Vibration.Default.Vibrate(TimeSpan.FromMilliseconds(milliseconds));
+                return true;
+            }
+            catch (FeatureNotSupportedException)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> RequestCameraPermissionAsync()

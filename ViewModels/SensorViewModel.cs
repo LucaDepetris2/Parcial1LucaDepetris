@@ -44,23 +44,32 @@ namespace Parcial1LucaDepetris.ViewModels
                 _sensorService.StopAccelerometer();
                 AccelerometerData = "Acelerómetro detenido.";
                 AccelButtonText = "Iniciar acelerómetro";
+                _isAccelerometerRunning = false;
             }
             else
             {
-                _sensorService.StartAccelerometer(reading =>
+                var started = _sensorService.StartAccelerometer(reading =>
                 {
                     AccelerometerData = $"X: {reading.X:F3}  |  Y: {reading.Y:F3}  |  Z: {reading.Z:F3}";
                 });
-                AccelButtonText = "Detener acelerómetro";
-            }
 
-            _isAccelerometerRunning = !_isAccelerometerRunning;
+                if (started)
+                {
+                    AccelButtonText = "Detener acelerómetro";
+                    _isAccelerometerRunning = true;
+                }
+                else
+                {
+                    AccelerometerData = "Acelerómetro no disponible en este dispositivo.";
+                }
+            }
         }
 
         [RelayCommand]
         private void Vibrate()
         {
-            _sensorService.Vibrate(500);
+            if (!_sensorService.Vibrate(500))
+                AccelerometerData = string.Empty; // no hace nada visible, falla silenciosamente en desktop
         }
 
         [RelayCommand]
