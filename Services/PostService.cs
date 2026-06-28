@@ -17,6 +17,11 @@ namespace Parcial1LucaDepetris.Services
         {
             var response = await _httpClient.GetAsync(ApiUrl);
             response.EnsureSuccessStatusCode();
+            return await ParseResponseAsync(response);
+        }
+
+        private static async Task<List<Post>> ParseResponseAsync(HttpResponseMessage response)
+        {
             var posts = await response.Content.ReadFromJsonAsync<List<Post>>();
             return posts ?? [];
         }

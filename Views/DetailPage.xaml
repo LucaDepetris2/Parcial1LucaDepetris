@@ -39,6 +39,16 @@
                    FontSize="15"
                    LineBreakMode="WordWrap" />
 
+            <Button Text="Guardar en Favoritos"
+                    Command="{Binding SaveFavoriteCommand}"
+                    HorizontalOptions="Fill"
+                    Margin="0,12,0,0" />
+
+            <Label Text="{Binding SaveStatus}"
+                   HorizontalOptions="Center"
+                   FontSize="13"
+                   TextColor="Green" />
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
