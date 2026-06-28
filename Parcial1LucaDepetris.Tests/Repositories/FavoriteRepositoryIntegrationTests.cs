@@ -7,13 +7,11 @@ namespace Parcial1LucaDepetris.Tests.Repositories
     // xUnit crea una nueva instancia por cada test, garantizando aislamiento
     public class FavoriteRepositoryIntegrationTests : IDisposable
     {
-        private readonly string _dbPath;
         private readonly SQLiteAsyncConnection _connection;
 
         public FavoriteRepositoryIntegrationTests()
         {
-            _dbPath = Path.Combine(Path.GetTempPath(), $"test_{Guid.NewGuid():N}.db3");
-            _connection = new SQLiteAsyncConnection(_dbPath);
+            _connection = new SQLiteAsyncConnection(":memory:");
         }
 
         private FavoriteRepository CreateRepository() => new(_connection);
@@ -21,8 +19,6 @@ namespace Parcial1LucaDepetris.Tests.Repositories
         public void Dispose()
         {
             _connection.CloseAsync().GetAwaiter().GetResult();
-            if (File.Exists(_dbPath))
-                File.Delete(_dbPath);
         }
 
         [Fact]
